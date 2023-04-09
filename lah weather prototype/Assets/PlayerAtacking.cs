@@ -43,7 +43,7 @@ public class PlayerAtacking : MonoBehaviour
             hitSomeone = false;
             foreach (Collider colider in objectDetector.colliders)
             {
-                Health health = colider.GetComponent<Health>();
+                Health health = colider?.GetComponent<Health>();
                 if (health != null && colider.CompareTag(enemyTag))
                 {
                     health.TakeDamage(damage);
