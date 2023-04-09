@@ -75,6 +75,7 @@ MonoBehaviour:
   distToStop: 5
   distToAway: 2
   distForRecovery: 1.5
+  distToBeIdle: 0.2
   breakAfterAttack: 2
   state: 0
 --- !u!136 &4838528338597117867
@@ -102,7 +103,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4838528338673796138
 PrefabInstance:

@@ -10,6 +10,8 @@ public class PlayerAtacking : MonoBehaviour
 
     public int damage = 5;
 
+    int lastAttackInt = -1, randomAttackInt;
+
 
     Animator animator;
     AnimationEventHandler eventHandler;
@@ -28,8 +30,13 @@ public class PlayerAtacking : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            while (randomAttackInt == lastAttackInt)
+            {
+                randomAttackInt = UnityEngine.Random.Range(0, 4);
+            }
 
-            animator.SetInteger("attackInt", UnityEngine.Random.Range(0, 4));
+            if (randomAttackInt != lastAttackInt)
+                animator.SetInteger("attackInt", randomAttackInt);
 
             animator.SetTrigger("attack");
 
@@ -43,6 +50,7 @@ public class PlayerAtacking : MonoBehaviour
                     hitSomeone = true;
                 }
             }
+            lastAttackInt = randomAttackInt;
         }
     }
 

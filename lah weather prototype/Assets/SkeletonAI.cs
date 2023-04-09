@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class SkeletonAI : Health
 {
+    public static int instances=0;
     NavMeshAgent navMesh;
 
     bool sawHuman;
@@ -14,6 +15,7 @@ public class SkeletonAI : Health
     public float distToStop = 5f;
     public float distToAway = 2f;
     public float distForRecovery = 1.5f;
+    public float distToBeIdle = 0.2f;
 
     public float breakAfterAttack = 2f;
     float breakPassed = 0;
@@ -33,6 +35,7 @@ public class SkeletonAI : Health
 
     private void Awake()
     {
+        instances++;
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         eventHandler = GetComponentInChildren<AnimationEventHandler>();
@@ -91,11 +94,18 @@ public class SkeletonAI : Health
                 break;
         }
 
-        animator.SetBool("moving", !navMesh.isStopped);
+        animator.SetBool("moving", Vector3.Distance(transform.position, navMesh.destination) > distToBeIdle);
+
+        if (currentHealth <= 0)
+        {
+            instances--;
+            Destroy(gameObject);
+        }
     }
     public void FinishAtacking()
     {
         finishedAtack = true;
+        CinemachineShaker.instance.ShakeCamera(2, 0.3f);
     }
     public void Recover()
     {
